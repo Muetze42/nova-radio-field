@@ -1,0 +1,35 @@
+{
+    "name": "norman-huth/nova-radio-field",
+    "description": "A Laravel Nova Radio field.",
+    "support": {
+        "source": "https://github.com/Muetze42/nova-radio-field",
+        "issues": "https://github.com/Muetze42/nova-radio-field/issues",
+        "docs": "https://github.com/Muetze42/nova-radio-field#readme"
+    },
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "laravel/nova": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "NormanHuth\\NovaRadioField\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NormanHuth\\NovaRadioField\\FieldServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
