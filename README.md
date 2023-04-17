@@ -1,4 +1,4 @@
-# Laravel Nova Radio Field
+# Laravel Nova Radio Buttons Field
 
 A Radio Buttons field for [Laravel Nova](https://nova.laravel.com/).
 
