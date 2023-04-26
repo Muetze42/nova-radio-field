@@ -50,7 +50,7 @@ Radio::make(__('Radio'), 'select')
         'L' => __('Select large size'),
     ])
 ```
-
+<!--
 ### Default Value
 
 By default, this field use the first array item as default. You can set another default value via the `default` method, which accepts a value or
@@ -67,7 +67,7 @@ Radio::make(__('Radio'), 'select')
         return $request->user()->group_id;
     }))
 ```
-
+-->
 ### Inline Radio Boxes
 
 If you would like to place the radios inline instead in columns use the `inline` method:
