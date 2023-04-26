@@ -51,6 +51,23 @@ Radio::make(__('Radio'), 'select')
     ])
 ```
 
+### Default Value
+
+By default, this field use the first array item as default. You can set another default value via the `default` method, which accepts a value or
+callback.
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->options([/*...*/])
+    ->default('M')
+    
+Radio::make(__('Radio'), 'select')
+    ->options([/*...*/])
+    ->default(function (NovaRequest $request) {
+        return $request->user()->group_id;
+    }))
+```
+
 ### Inline Radio Boxes
 
 If you would like to place the radios inline instead in columns use the `inline` method:

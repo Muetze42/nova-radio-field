@@ -56,6 +56,13 @@ class Radio extends Select
     protected array $radioHelpTexts = [];
 
     /**
+     * The NovaRequest instance
+     *
+     * @var NovaRequest
+     */
+    protected NovaRequest $request;
+
+    /**
      * Get the component name for the field.
      *
      * @return string
@@ -70,6 +77,18 @@ class Radio extends Select
     }
 
     /**
+     * @return NovaRequest
+     */
+    protected function getRequest(): NovaRequest
+    {
+        if (!isset($this->request)) {
+            $this->request = app(NovaRequest::class);
+        }
+
+        return $this->request;
+    }
+
+    /**
      * Determine if this request is a editing request.
      *
      * @return bool
@@ -77,8 +96,7 @@ class Radio extends Select
     protected function isEditing(): bool
     {
         if (!isset($this->isEditing)) {
-            $request = app(NovaRequest::class);
-            $editing = $request->input('editing');
+            $editing = $this->getRequest()->input('editing');
 
             $this->isEditing = in_array($editing, ['true', true]);
         }
@@ -196,11 +214,7 @@ class Radio extends Select
     public function jsonSerialize(): array
     {
         if ($this->isEditing()) {
-            $options = $this->getRadioOptions();
-
-            if (!isset($options[$this->value]) && !empty($options)) {
-                $this->value = array_key_first($options);
-            }
+            $this->resolveValue();
         }
 
         $containerClasses = $this->inline ? 'gap-x-' : 'flex-col gap-y-';
@@ -213,5 +227,28 @@ class Radio extends Select
         ]);
 
         return Field::jsonSerialize();
+    }
+
+    /**
+     * Resolve Value on Forms.
+     *
+     * @return void
+     */
+    protected function resolveValue(): void
+    {
+        $options = $this->getRadioOptions();
+
+        if (isset($options[$this->value]) || empty($options)) {
+            return;
+        }
+
+        $defaultValue = $this->resolveDefaultValue($this->getRequest());
+
+        if ($defaultValue && isset($options[$defaultValue])) {
+            $this->value = $defaultValue;
+            return;
+        }
+
+        $this->value = array_key_first($options);
     }
 }
