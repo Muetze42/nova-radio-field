@@ -2,9 +2,11 @@
 
 A Radio Buttons field for [Laravel Nova](https://nova.laravel.com/).
 
-![Preview 1](docs/preview.png)
+![Preview 1](https://raw.githubusercontent.com/Muetze42/nova-radio-field/main/docs/preview.png)
 
-![Preview 2](docs/inline.png)
+![Preview 2](https://raw.githubusercontent.com/Muetze42/nova-radio-field/main/docs/inline.png)
+
+![Preview 3](https://raw.githubusercontent.com/Muetze42/nova-radio-field/main/docs/grid.png)
 
 ## Install
 
@@ -34,7 +36,6 @@ Radio::make(__('Radio'), 'select')
 
 ```php
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->help(__('Help Text'))
 ```
 
@@ -44,7 +45,6 @@ If you would like to place "help" text beneath a radio label, you may invoke the
 
 ```php
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->radioHelpTexts([
         'S' => __('Select small size'),
         'L' => __('Select large size'),
@@ -58,11 +58,9 @@ callback.
 
 ```php
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->default('M')
     
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->default(function (NovaRequest $request) {
         return $request->user()->group_id;
     }))
@@ -74,11 +72,12 @@ If you would like to place the radios inline instead in columns use the `inline`
 
 ```php
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->inline()
 ```
 
-### Controlling Gap
+### Styling
+
+#### Controlling Gap
 
 if you would like change the gap between radio buttons use the `gap` method:
 
@@ -99,16 +98,79 @@ if you would like change the gap between radio buttons use the `gap` method:
 
 ```php
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->gap(3)
 ```
 
-#### Display Keys On Index & Detail Page
+#### Add Classes To Field
+
+You can add classes to the field class attribute by invoking the addClasses method when defining the field:
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->addClasses(['text-center']), 
+```
+
+#### Set Field Classes
+
+You can remove default field classes and set new classes of the field class attribute by invoking the setClasses method when defining the field:
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->setClasses(['flex', 'flex-wrap', 'justify-between']), 
+```
+
+#### Add Styles To Field
+
+You can add styles to the field style attribute by invoking the addStyles method when defining the field:
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->addStyles(['max-width' => '25rem']), 
+```
+
+#### Add Classes To Field Label's
+
+You can add classes to the field label's class attribute by invoking the addClasses method when defining the field:
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->addLabelClasses(['truncate']),
+```
+
+#### Add Styles To Field Label's
+
+You can add styles to the field label's style attribute by invoking the addStyles method when defining the field:
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->addLabelStyles(['max-width' => '10rem']),
+```
+
+### Example: Creating Grid Like 3rd Preview
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->options([
+        'S' => __('Small'),
+        'M' => __('Medium'),
+        'L' => __('Large'),
+        'E' => __('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam'),
+        'G' => __('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam'),
+    ])
+    ->radioHelpTexts([
+        'S' => __('Select small size'),
+        'L' => __('Select large size'),
+    ])
+    ->gap(4)
+    ->inline()
+    ->addLabelStyles(['width' => '15rem']),
+```
+
+### Display Keys On Index & Detail Page
 
 If you would like to display the values instead the label, you may invoke the `displayUsingValues` method when defining the field :wink: :
 
 ```php
 Radio::make(__('Radio'), 'select')
-    ->options([/*...*/])
     ->displayUsingValues()
 ```
