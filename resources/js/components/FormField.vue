@@ -6,22 +6,27 @@
         :full-width-content="fullWidthContent"
     >
         <template #field>
-            <div class="inline-flex" :class="field.cClasses">
-                <label v-for="option in field.options" class="cursor-pointer">
-                    <input
-                        :id="option.value === value ? field.attribute : null"
-                        :value="option.value"
-                        :name="field.attribute"
-                        type="radio"
-                        v-model="value"
-                        class="checkbox rounded-full"
-                        :class="field.radioHelps[option.value] ? 'mb-0.5' : 'mb-1'"
-                    />
-                    {{ option.label }}
-                    <span v-if="field.radioHelps[option.value]"
-                          class="block help-text help-text pl-5 mt-[-0.25rem]"
-                          v-html="field.radioHelps[option.value]"
-                    />
+            <div :class="field.classes" :style="field.styles">
+                <label v-for="option in field.options" :class="field.labelClasses" :style="field.labelStyles">
+                    <span class="block flex gap-1.5">
+                        <span class="block">
+                            <input
+                                :id="option.value === value ? field.attribute : null"
+                                :value="option.value"
+                                :name="field.attribute"
+                                type="radio"
+                                v-model="value"
+                                class="checkbox rounded-full"
+                            />
+                        </span>
+                        <span class="block">
+                            {{ option.label }}
+                            <span v-if="field.radioHelps[option.value]"
+                                  class="block help-text help-text mt-[-0.25rem]"
+                                  v-html="field.radioHelps[option.value]"
+                            />
+                        </span>
+                    </span>
                 </label>
             </div>
         </template>
@@ -35,11 +40,6 @@ export default {
     mixins: [FormField, HandlesValidationErrors],
 
     props: ['resourceName', 'resourceId', 'field'],
-
-    mounted() {
-        console.log(this.field.options)
-        console.log(this.field.radioHelps)
-    },
 
     methods: {
         /*

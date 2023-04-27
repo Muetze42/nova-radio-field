@@ -63,6 +63,34 @@ class Radio extends Select
     protected NovaRequest $request;
 
     /**
+     * The field's classes.
+     *
+     * @var array
+     */
+    protected array $classes = ['{field-default-classes}'];
+
+    /**
+     * The field label's classes.
+     *
+     * @var array
+     */
+    protected array $labelClasses = ['cursor-pointer'];
+
+    /**
+     * The field's styles.
+     *
+     * @var array
+     */
+    protected array $styles = [];
+
+    /**
+     * The field label's styles.
+     *
+     * @var array
+     */
+    protected array $labelStyles = [];
+
+    /**
      * Get the component name for the field.
      *
      * @return string
@@ -119,8 +147,8 @@ class Radio extends Select
     /**
      * Resolve the field's value for display.
      *
-     * @param  mixed  $resource
-     * @param  string|null  $attribute
+     * @param mixed       $resource
+     * @param string|null $attribute
      * @return void
      */
     public function resolveForDisplay($resource, $attribute = null): void
@@ -180,6 +208,85 @@ class Radio extends Select
     }
 
     /**
+     * Add classes to the field class attribute.
+     *
+     * @param string|array $classes
+     * @return $this
+     */
+    public function addClasses(string|array $classes): static
+    {
+        $this->classes = array_merge($this->classes, (array) $classes);
+
+        return $this;
+    }
+
+    /**
+     * Set classes to the field class attribute.
+     *
+     * @param string|array $classes
+     * @return $this
+     */
+    public function setClasses(string|array $classes): static
+    {
+        $this->classes = (array) $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add styles to the field style attribute.
+     *
+     * @param array $styles
+     * @return $this
+     */
+    public function addStyles(array $styles): static
+    {
+        $this->styles = array_merge($this->styles, $styles);
+
+        return $this;
+    }
+
+
+    /**
+     * Add classes to the field label's class attributes.
+     *
+     * @param string|array $classes
+     * @return $this
+     */
+    public function addLabelClasses(string|array $classes): static
+    {
+        $this->labelClasses = array_merge($this->labelClasses, (array) $classes);
+
+        return $this;
+    }
+
+    /**
+     * Set classes to the field label's class attributes.
+     *
+     * @param string|array $classes
+     * @return $this
+     */
+    public function setLabelClasses(string|array $classes): static
+    {
+        $this->labelClasses = (array) $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add styles to the field label's style attributes.
+     *
+     * @param array $styles
+     * @return $this
+     */
+    public function addLabelStyles(array $styles): static
+    {
+        $this->labelStyles = array_merge($this->labelStyles, $styles);
+
+        return $this;
+    }
+
+    /**
      * Controlling gutters between radio buttons.
      *
      * @param float $gap
@@ -188,7 +295,8 @@ class Radio extends Select
     public function gap(
         #[ExpectedValues(values: [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 8])]
         float $gap
-    ): static {
+    ): static
+    {
         $this->gap = $gap;
 
         return $this;
@@ -215,18 +323,29 @@ class Radio extends Select
     {
         if ($this->isEditing()) {
             $this->resolveValue();
+            $this->resolveClasses();
         }
 
-        $containerClasses = $this->inline ? 'gap-x-' : 'flex-col gap-y-';
-        $containerClasses.= $this->gap;
-
         $this->withMeta([
-            'options'    => $this->serializeRadioOptions(),
+            'options' => $this->serializeRadioOptions(),
             'radioHelps' => $this->radioHelpTexts,
-            'cClasses'    => $containerClasses,
+            'classes' => $this->classes,
+            'labelClasses' => $this->labelClasses,
+            'styles' => $this->styles,
+            'labelStyles' => $this->labelStyles,
         ]);
 
         return Field::jsonSerialize();
+    }
+
+    protected function resolveClasses(): void
+    {
+        $this->classes = array_map(function ($item) {
+            $classes = $this->inline ? 'inline-flex flex-wrap' : 'flex flex-col';
+            $classes .= ' gap-'.$this->gap;
+
+            return str_replace('{field-default-classes}', $classes, trim($item));
+        }, $this->classes);
     }
 
     /**
