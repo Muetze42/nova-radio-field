@@ -17,6 +17,7 @@
                                 type="radio"
                                 v-model="value"
                                 class="checkbox rounded-full"
+                                @input="changed(option.value)"
                             />
                         </span>
                         <span class="block">
@@ -34,10 +35,10 @@
 </template>
 
 <script>
-import {FormField, HandlesValidationErrors} from 'laravel-nova'
+import {FormField, DependentFormField, HandlesValidationErrors} from 'laravel-nova'
 
 export default {
-    mixins: [FormField, HandlesValidationErrors],
+    mixins: [FormField, DependentFormField, HandlesValidationErrors],
 
     props: ['resourceName', 'resourceId', 'field'],
 
@@ -55,6 +56,10 @@ export default {
         fill(formData) {
             formData.append(this.field.attribute, this.value || '')
         },
+
+        changed(value) {
+            this.emitFieldValueChange(this.field.attribute, value)
+        }
     },
 }
 </script>
