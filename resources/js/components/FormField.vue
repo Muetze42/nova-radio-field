@@ -1,6 +1,6 @@
 <template>
     <DefaultField
-        :field="field"
+        :field="currentField"
         :errors="errors"
         :show-help-text="showHelpText"
         :full-width-content="fullWidthContent"
@@ -35,31 +35,40 @@
 </template>
 
 <script>
-import {FormField, DependentFormField, HandlesValidationErrors} from 'laravel-nova'
+import {DependentFormField, HandlesValidationErrors} from 'laravel-nova'
 
 export default {
-    mixins: [FormField, DependentFormField, HandlesValidationErrors],
+    mixins: [HandlesValidationErrors, DependentFormField],
 
-    props: ['resourceName', 'resourceId', 'field'],
+    data: () => ({
+        selectedOption: null,
+        value: null,
+    }),
+
+    created() {
+        this.$nextTick(() => {
+            this.changed(this.value)
+        })
+    },
 
     methods: {
-        /*
-         * Set the initial, internal value for the field.
-         */
-        setInitialValue() {
-            this.value = this.field.value || ''
+        fill(formData) {
+            this.fillIfVisible(formData, this.field.attribute, this.value ?? '')
         },
 
         /**
-         * Fill the given FormData object with the field's internal value.
+         * Handle on synced field.
          */
-        fill(formData) {
-            formData.append(this.field.attribute, this.value || '')
-        },
-
         changed(value) {
             this.emitFieldValueChange(this.field.attribute, value)
-        }
+        },
+
+        /**
+         * Handle on synced field.
+         */
+        onSyncedField() {
+            this.changed()
+        },
     },
 }
 </script>
