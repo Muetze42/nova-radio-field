@@ -42,7 +42,6 @@ export default {
 
     data: () => ({
         selectedOption: null,
-        value: null,
     }),
 
     created() {
@@ -67,6 +66,13 @@ export default {
          * Handle on synced field.
          */
         onSyncedField() {
+            if (this.currentField) {
+                for (let fieldItem of ['options', 'radioHelps', 'classes', 'labelClasses', 'styles', 'labelStyles']) {
+                    if (this.currentField[fieldItem] && this.currentField[fieldItem] != this.field[fieldItem]) {
+                        this.field[fieldItem] = this.currentField[fieldItem]
+                    }
+                }
+            }
             this.changed()
         },
     },
