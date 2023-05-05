@@ -7,9 +7,14 @@ use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Field;
 use Laravel\Nova\Http\Requests\NovaRequest;
 use Laravel\Nova\Util;
+use NormanHuth\NovaBasePackage\HasStyle;
+use NormanHuth\NovaBasePackage\IsNova;
 
 class Radio extends Select
 {
+    use HasStyle;
+    use IsNova;
+
     /**
      * The field's component.
      *
@@ -63,20 +68,6 @@ class Radio extends Select
     protected NovaRequest $request;
 
     /**
-     * The field's classes.
-     *
-     * @var array
-     */
-    protected array $classes = ['{field-default-classes}'];
-
-    /**
-     * The field label's classes.
-     *
-     * @var array
-     */
-    protected array $labelClasses = ['cursor-pointer'];
-
-    /**
      * The field's styles.
      *
      * @var array
@@ -91,6 +82,21 @@ class Radio extends Select
     protected array $labelStyles = [];
 
     /**
+     * Create a new field.
+     *
+     * @param  string  $name
+     * @param  string|\Closure|callable|object|null  $attribute
+     * @param  (callable(mixed, mixed, ?string):(mixed))|null  $resolveCallback
+     * @return void
+     */
+    public function __construct($name, $attribute = null, callable $resolveCallback = null)
+    {
+        $this->classes = ['{field-default-classes}'];
+        $this->labelClasses = ['cursor-pointer'];
+        parent::__construct($name, $attribute, $resolveCallback);
+    }
+
+    /**
      * Get the component name for the field.
      *
      * @return string
@@ -102,34 +108,6 @@ class Radio extends Select
         }
 
         return parent::component();
-    }
-
-    /**
-     * @return NovaRequest
-     */
-    protected function getRequest(): NovaRequest
-    {
-        if (!isset($this->request)) {
-            $this->request = app(NovaRequest::class);
-        }
-
-        return $this->request;
-    }
-
-    /**
-     * Determine if this request is a editing request.
-     *
-     * @return bool
-     */
-    protected function isEditing(): bool
-    {
-        if (!isset($this->isEditing)) {
-            $editing = $this->getRequest()->input('editing');
-
-            $this->isEditing = in_array($editing, ['true', true]);
-        }
-
-        return $this->isEditing;
     }
 
     /**
@@ -206,46 +184,6 @@ class Radio extends Select
 
         return $this;
     }
-
-    /**
-     * Add classes to the field class attribute.
-     *
-     * @param string|array $classes
-     * @return $this
-     */
-    public function addClasses(string|array $classes): static
-    {
-        $this->classes = array_merge($this->classes, (array) $classes);
-
-        return $this;
-    }
-
-    /**
-     * Set classes to the field class attribute.
-     *
-     * @param string|array $classes
-     * @return $this
-     */
-    public function setClasses(string|array $classes): static
-    {
-        $this->classes = (array) $classes;
-
-        return $this;
-    }
-
-    /**
-     * Add styles to the field style attribute.
-     *
-     * @param array $styles
-     * @return $this
-     */
-    public function addStyles(array $styles): static
-    {
-        $this->styles = array_merge($this->styles, $styles);
-
-        return $this;
-    }
-
 
     /**
      * Add classes to the field label's class attributes.
