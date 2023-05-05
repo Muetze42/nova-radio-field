@@ -18,6 +18,7 @@
                                 v-model="value"
                                 class="checkbox rounded-full"
                                 @input="changed(option.value)"
+                                :disabled="field.readonly"
                             />
                         </span>
                         <span class="block">
@@ -67,11 +68,15 @@ export default {
          */
         onSyncedField() {
             if (this.currentField) {
-                for (let fieldItem of ['options', 'radioHelps', 'classes', 'labelClasses', 'styles', 'labelStyles']) {
+                for (let fieldItem of ['options', 'readonly', 'radioHelps', 'classes', 'labelClasses', 'styles', 'labelStyles']) {
                     if (this.currentField[fieldItem] && this.currentField[fieldItem] != this.field[fieldItem]) {
                         this.field[fieldItem] = this.currentField[fieldItem]
                     }
                 }
+            }
+            // Keep
+            if (!this.currentField.readonly) {
+                this.field.readonly = false
             }
             this.changed()
         },

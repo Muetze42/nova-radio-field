@@ -13,11 +13,10 @@ class FieldServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         Nova::serving(function (ServingNova $event) {
             Nova::script('nova-radio-field', __DIR__.'/../dist/js/field.js');
-            Nova::style('nova-radio-field', __DIR__.'/../dist/css/field.css');
         });
     }
 
@@ -26,7 +25,7 @@ class FieldServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
