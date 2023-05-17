@@ -75,6 +75,13 @@ class Radio extends Select
     protected array $styles = [];
 
     /**
+     * The label classes.
+     *
+     * @var array
+     */
+    protected array $labelClasses = [];
+
+    /**
      * The field label's styles.
      *
      * @var array

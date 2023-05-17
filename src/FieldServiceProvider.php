@@ -5,9 +5,12 @@ namespace NormanHuth\NovaRadioField;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Events\ServingNova;
 use Laravel\Nova\Nova;
+use NormanHuth\NovaBasePackage\ServiceProviderTrait;
 
 class FieldServiceProvider extends ServiceProvider
 {
+    use ServiceProviderTrait;
+
     /**
      * Bootstrap any application services.
      *
@@ -18,6 +21,8 @@ class FieldServiceProvider extends ServiceProvider
         Nova::serving(function (ServingNova $event) {
             Nova::script('nova-radio-field', __DIR__.'/../dist/js/field.js');
         });
+
+        $this->addAbout();
     }
 
     /**

@@ -15,7 +15,7 @@
                                 :value="option.value"
                                 :name="field.attribute"
                                 type="radio"
-                                v-model="value"
+                                v-model="selectedOption"
                                 class="checkbox rounded-full"
                                 @input="changed(option.value)"
                                 :disabled="field.readonly"
@@ -37,6 +37,7 @@
 
 <script>
 import {DependentFormField, HandlesValidationErrors} from 'laravel-nova'
+import find from "lodash/find";
 
 export default {
     mixins: [HandlesValidationErrors, DependentFormField],
@@ -46,9 +47,12 @@ export default {
     }),
 
     created() {
-        this.$nextTick(() => {
-            this.changed(this.value)
-        })
+        if (this.field.value) {
+            this.selectedOption = this.value
+            this.$nextTick(() => {
+                this.changed(this.value)
+            })
+        }
     },
 
     methods: {
@@ -59,8 +63,26 @@ export default {
         /**
          * Handle on synced field.
          */
-        changed(value) {
-            this.emitFieldValueChange(this.field.attribute, value)
+        changed(value = null) {
+            let firstValue = null
+            this.value = null
+            if (!value) {
+                value = this.selectedOption
+            }
+            Object.entries(this.field.options).forEach(([k,v]) => {
+                if (v.value === value) {
+                    this.value = v.value
+                    return
+                }
+                if (!firstValue) {
+                    firstValue = v.value
+                }
+            })
+            if (!this.value) {
+                this.value = firstValue
+                this.selectedOption = firstValue
+            }
+            this.emitFieldValueChange(this.field.attribute, this.value)
         },
 
         /**
