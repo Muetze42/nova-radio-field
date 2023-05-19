@@ -44,11 +44,6 @@ class Radio extends Select
     protected int $gap = 1;
 
     /**
-     * @var bool
-     */
-    protected bool $isEditing;
-
-    /**
      * @var mixed
      */
     protected mixed $radioOptions;
@@ -59,13 +54,6 @@ class Radio extends Select
      * @var array
      */
     protected array $radioHelpTexts = [];
-
-    /**
-     * The NovaRequest instance
-     *
-     * @var NovaRequest
-     */
-    protected NovaRequest $request;
 
     /**
      * The field's styles.
@@ -110,7 +98,7 @@ class Radio extends Select
      */
     public function component(): string
     {
-        if ($this->isEditing()) {
+        if ($this->isFormRequest()) {
             return $this->formComponent;
         }
 
@@ -266,7 +254,7 @@ class Radio extends Select
      */
     public function jsonSerialize(): array
     {
-        if ($this->isEditing()) {
+        if ($this->isFormRequest()) {
             $this->resolveValue();
             $this->resolveClasses();
         }
