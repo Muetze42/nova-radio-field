@@ -81,9 +81,11 @@ export default {
                     firstValue = v.value
                 }
             })
-            if (!this.value || this.selectedOption) {
-                this.value = firstValue
+            if (!this.selectedOption) {
                 this.selectedOption = firstValue
+            }
+            if (!this.value) {
+                this.value = this.selectedOption
             }
             this.emitFieldValueChange(this.field.attribute, this.value)
         },
