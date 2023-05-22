@@ -53,6 +53,9 @@ export default {
                 this.changed(this.value)
             })
         }
+        if (!this.selectedOption && !this.field.value) {
+            this.changed()
+        }
     },
 
     methods: {
@@ -66,7 +69,7 @@ export default {
         changed(value = null) {
             let firstValue = null
             this.value = null
-            if (!value) {
+            if (!value && this.selectedOption) {
                 value = this.selectedOption
             }
             Object.entries(this.field.options).forEach(([k,v]) => {
@@ -78,7 +81,7 @@ export default {
                     firstValue = v.value
                 }
             })
-            if (!this.value) {
+            if (!this.value || this.selectedOption) {
                 this.value = firstValue
                 this.selectedOption = firstValue
             }

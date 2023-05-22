@@ -20,7 +20,7 @@ class Radio extends Select
      *
      * @var string
      */
-    protected string $formComponent = 'nova-radio-field';
+    public $component = 'nova-radio-field';
 
     /**
      * Display values using their corresponding specified labels.
@@ -89,20 +89,6 @@ class Radio extends Select
         $this->classes = ['{field-default-classes}'];
         $this->labelClasses = ['cursor-pointer'];
         parent::__construct($name, $attribute, $resolveCallback);
-    }
-
-    /**
-     * Get the component name for the field.
-     *
-     * @return string
-     */
-    public function component(): string
-    {
-        if ($this->isFormRequest()) {
-            return $this->formComponent;
-        }
-
-        return parent::component();
     }
 
     /**
