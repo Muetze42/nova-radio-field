@@ -34,7 +34,7 @@ class Radio extends Select
      *
      * @var bool
      */
-    protected bool $inline = false;
+    public $inline = false;
 
     /**
      * Gutters between items.
