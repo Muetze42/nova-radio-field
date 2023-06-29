@@ -34,7 +34,7 @@ class Radio extends Select
      *
      * @var bool
      */
-    protected bool $inline = false;
+    protected bool $radioInline = false;
 
     /**
      * Gutters between items.
@@ -228,7 +228,7 @@ class Radio extends Select
      */
     public function inline(): static
     {
-        $this->inline = true;
+        $this->radioInline = true;
 
         return $this;
     }
@@ -260,7 +260,7 @@ class Radio extends Select
     protected function resolveClasses(): void
     {
         $this->classes = array_map(function ($item) {
-            $classes = $this->inline ? 'inline-flex flex-wrap' : 'flex flex-col';
+            $classes = $this->radioInline ? 'inline-flex flex-wrap' : 'flex flex-col';
             $classes .= ' gap-'.$this->gap;
 
             return str_replace('{field-default-classes}', $classes, trim($item));
