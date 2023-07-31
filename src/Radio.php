@@ -282,6 +282,11 @@ class Radio extends Select
 
         $defaultValue = $this->resolveDefaultValue($this->getRequest());
 
+        if (class_exists('\Laravel\Nova\Support\UndefinedValue') &&
+            $defaultValue instanceof \Laravel\Nova\Support\UndefinedValue) {
+            $defaultValue = null;
+        }
+
         if ($defaultValue && isset($options[$defaultValue])) {
             $this->value = $defaultValue;
             return;
