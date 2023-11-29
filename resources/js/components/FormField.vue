@@ -13,7 +13,7 @@
                             <input
                                 :id="option.value === value ? field.attribute : null"
                                 :value="option.value"
-                                :name="field.attribute"
+                                :name="`${formUniqueId}_${field.attribute}`"
                                 type="radio"
                                 v-model="selectedOption"
                                 class="checkbox rounded-full"
@@ -41,6 +41,8 @@ import find from "lodash/find";
 
 export default {
     mixins: [HandlesValidationErrors, DependentFormField],
+
+    props: ['formUniqueId'],
 
     data: () => ({
         selectedOption: null,
