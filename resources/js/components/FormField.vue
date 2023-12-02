@@ -49,13 +49,13 @@ export default {
     }),
 
     created() {
-        if (this.field.value) {
+        if (this.field.value !== null) {
             this.selectedOption = this.value
             this.$nextTick(() => {
                 this.changed(this.value)
             })
         }
-        if (!this.selectedOption && !this.field.value) {
+        if (!this.selectedOption && this.field.value === null) {
             this.changed()
         }
     },
@@ -71,22 +71,21 @@ export default {
         changed(value = null) {
             let firstValue = null
             this.value = null
-            if (!value && this.selectedOption) {
+            if (value === null && this.selectedOption) {
                 value = this.selectedOption
             }
             Object.entries(this.field.options).forEach(([k,v]) => {
+                if (firstValue === null) {
+                    firstValue = v.value
+                }
                 if (v.value === value) {
                     this.value = v.value
-                    return
-                }
-                if (!firstValue) {
-                    firstValue = v.value
                 }
             })
             if (!this.selectedOption) {
                 this.selectedOption = firstValue
             }
-            if (!this.value) {
+            if (this.value === null) {
                 this.value = this.selectedOption
             }
             this.emitFieldValueChange(this.field.attribute, this.value)
