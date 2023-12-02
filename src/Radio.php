@@ -3,9 +3,8 @@
 namespace NormanHuth\NovaRadioField;
 
 use JetBrains\PhpStorm\ExpectedValues;
-use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Field;
-use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Util;
 use NormanHuth\NovaBasePackage\HasStyle;
 use NormanHuth\NovaBasePackage\IsNova;
@@ -82,6 +81,7 @@ class Radio extends Select
      * @param  string  $name
      * @param  string|\Closure|callable|object|null  $attribute
      * @param  (callable(mixed, mixed, ?string):(mixed))|null  $resolveCallback
+     *
      * @return void
      */
     public function __construct($name, $attribute = null, callable $resolveCallback = null)
@@ -108,6 +108,7 @@ class Radio extends Select
      *
      * @param mixed       $resource
      * @param string|null $attribute
+     *
      * @return void
      */
     public function resolveForDisplay($resource, $attribute = null): void
@@ -157,6 +158,7 @@ class Radio extends Select
      * Add help text to the radio buttons.
      *
      * @param array $array
+     *
      * @return $this
      */
     public function radioHelpTexts(array $array): static
@@ -170,6 +172,7 @@ class Radio extends Select
      * Add classes to the field label's class attributes.
      *
      * @param string|array $classes
+     *
      * @return $this
      */
     public function addLabelClasses(string|array $classes): static
@@ -183,6 +186,7 @@ class Radio extends Select
      * Set classes to the field label's class attributes.
      *
      * @param string|array $classes
+     *
      * @return $this
      */
     public function setLabelClasses(string|array $classes): static
@@ -196,6 +200,7 @@ class Radio extends Select
      * Add styles to the field label's style attributes.
      *
      * @param array $styles
+     *
      * @return $this
      */
     public function addLabelStyles(array $styles): static
@@ -209,13 +214,13 @@ class Radio extends Select
      * Controlling gutters between radio buttons.
      *
      * @param float $gap
+     *
      * @return $this
      */
     public function gap(
         #[ExpectedValues(values: [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 8])]
         float $gap
-    ): static
-    {
+    ): static {
         $this->gap = $gap;
 
         return $this;
@@ -261,7 +266,7 @@ class Radio extends Select
     {
         $this->classes = array_map(function ($item) {
             $classes = $this->radioInline ? 'inline-flex flex-wrap' : 'flex flex-col';
-            $classes .= ' gap-'.$this->gap;
+            $classes .= ' gap-' . $this->gap;
 
             return str_replace('{field-default-classes}', $classes, trim($item));
         }, $this->classes);
@@ -282,13 +287,16 @@ class Radio extends Select
 
         $defaultValue = $this->resolveDefaultValue($this->getRequest());
 
-        if (class_exists('\Laravel\Nova\Support\UndefinedValue') &&
-            $defaultValue instanceof \Laravel\Nova\Support\UndefinedValue) {
+        if (
+            class_exists('\Laravel\Nova\Support\UndefinedValue') &&
+            $defaultValue instanceof \Laravel\Nova\Support\UndefinedValue
+        ) {
             $defaultValue = null;
         }
 
-        if ($defaultValue && isset($options[$defaultValue])) {
+        if (!is_null($defaultValue) && isset($options[$defaultValue])) {
             $this->value = $defaultValue;
+
             return;
         }
 

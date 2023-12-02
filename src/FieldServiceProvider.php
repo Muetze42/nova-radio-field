@@ -19,7 +19,7 @@ class FieldServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Nova::serving(function (ServingNova $event) {
-            Nova::script('nova-radio-field', __DIR__.'/../dist/js/field.js');
+            Nova::script('nova-radio-field', __DIR__ . '/../dist/js/field.js');
         });
 
         $this->addAbout();
