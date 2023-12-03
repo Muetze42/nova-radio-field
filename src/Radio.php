@@ -62,7 +62,7 @@ class Radio extends Select
     protected array $styles = [];
 
     /**
-     * The label classes.
+     * The field label's classes.
      *
      * @var array
      */
@@ -74,6 +74,30 @@ class Radio extends Select
      * @var array
      */
     protected array $labelStyles = [];
+
+    /**
+     * The field title's classes.
+     *
+     * @var array
+     */
+    protected array $titleClasses = [
+        'font-medium',
+        'text-lg',
+    ];
+
+    /**
+     * The field title's styles.
+     *
+     * @var array
+     */
+    protected array $titleStyles = [];
+
+    /**
+     * The field title.
+     *
+     * @var string|null
+     */
+    protected ?string $title = null;
 
     /**
      * Create a new field.
@@ -211,6 +235,55 @@ class Radio extends Select
     }
 
     /**
+     * Add classes to the field title's class attributes.
+     *
+     * @param string|array $classes
+     *
+     * @return $this
+     */
+    public function addTitleClasses(string|array $classes): static
+    {
+        $this->titleClasses = array_merge($this->titleClasses, (array) $classes);
+
+        return $this;
+    }
+
+    /**
+     * Set classes to the field title's class attributes.
+     *
+     * @param string|array $classes
+     *
+     * @return $this
+     */
+    public function setTitleClasses(string|array $classes): static
+    {
+        $this->titleClasses = (array) $classes;
+
+        return $this;
+    }
+
+    /**
+     * Add classes to the field title's class attributes.
+     *
+     * @param array $styles
+     *
+     * @return $this
+     */
+    public function addTitleStyles(array $styles): static
+    {
+        $this->titleStyles = array_merge($this->titleStyles, $styles);
+
+        return $this;
+    }
+
+    public function title(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
      * Controlling gutters between radio buttons.
      *
      * @param float $gap
@@ -239,6 +312,20 @@ class Radio extends Select
     }
 
     /**
+     * Hide Label on Form.
+     *
+     * @param bool  $withLabel
+     *
+     * @return $this
+     */
+    public function withoutLabel(bool $withLabel = false): static
+    {
+        $this->withLabel = $withLabel;
+
+        return $this;
+    }
+
+    /**
      * Prepare the field for JSON serialization.
      *
      * @return array<string, mixed>
@@ -257,11 +344,17 @@ class Radio extends Select
             'labelClasses' => $this->labelClasses,
             'styles' => $this->styles,
             'labelStyles' => $this->labelStyles,
+            'titleStyles' => $this->titleStyles,
+            'titleClasses' => $this->titleClasses,
+            'title' => $this->title,
         ]);
 
         return Field::jsonSerialize();
     }
 
+    /**
+     * @return void
+     */
     protected function resolveClasses(): void
     {
         $this->classes = array_map(function ($item) {

@@ -11,6 +11,8 @@ A Radio Buttons field for [Laravel Nova](https://nova.laravel.com/).
 
 ![Preview 3](https://raw.githubusercontent.com/Muetze42/nova-radio-field/main/docs/grid.png)
 
+![Preview 4](https://raw.githubusercontent.com/Muetze42/nova-radio-field/main/docs/without-label.png)
+
 ## Install
 
 ```
@@ -44,7 +46,8 @@ Radio::make(__('Radio'), 'select')
 
 ### Help Text For Radio Label
 
-If you would like to place "help" text beneath a radio label, you may invoke the `radioHelpTexts` method when defining your field:
+If you would like to place "help" text beneath a radio label, you may invoke the `radioHelpTexts` method when defining
+your field:
 
 ```php
 Radio::make(__('Radio'), 'select')
@@ -56,7 +59,8 @@ Radio::make(__('Radio'), 'select')
 
 ### Default Value
 
-By default, this field use the first array item as default. You can set another default value via the `default` method, which accepts a value or
+By default, this field use the first array item as default. You can set another default value via the `default` method,
+which accepts a value or
 callback.
 
 ```php
@@ -82,7 +86,7 @@ Radio::make(__('Radio'), 'select')
 
 #### Controlling Gap
 
-if you would like change the gap between radio buttons use the `gap` method:
+If you would like change the gap between radio buttons use the `gap` method:
 
 **Default**: 1 (0.25rem)
 
@@ -115,7 +119,8 @@ Radio::make(__('Radio'), 'select')
 
 #### Set Field Classes
 
-You can remove default field classes and set new classes of the field class attribute by invoking the setClasses method when defining the field:
+You can remove default field classes and set new classes of the field class attribute by invoking the setClasses method
+when defining the field:
 
 ```php
 Radio::make(__('Radio'), 'select')
@@ -169,9 +174,46 @@ Radio::make(__('Radio'), 'select')
     ->addLabelStyles(['width' => '15rem']),
 ```
 
+### Without Label Like 4th Preview
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->withoutLabel()
+    ->addClasses(['py-4'])
+```
+
+### Add A Title like 4th Preview
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->title('Select A Size')
+```
+
+#### Add Classes To Title
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->addTitleClasses(['pt-2'])
+```
+
+Or remove default classes and set own:
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->setTitleClasses([])
+```
+
+#### Add Styles To Title
+
+```php
+Radio::make(__('Radio'), 'select')
+    ->addTitleStyles(['padding-left: 1rem'])
+```
+
 ### Display Keys On Index & Detail Page
 
-If you would like to display the values instead the label, you may invoke the `displayUsingValues` method when defining the field :wink: :
+If you would like to display the values instead the label, you may invoke the `displayUsingValues` method when defining
+the field :wink: :
 
 ```php
 Radio::make(__('Radio'), 'select')
