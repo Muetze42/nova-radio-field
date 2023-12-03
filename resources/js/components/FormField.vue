@@ -6,14 +6,18 @@
         :full-width-content="fullWidthContent"
     >
         <template #field>
+            <h3 v-if="field.title" :class="field.titleClasses" :style="field.titleStyles">
+                {{ field.title }}
+            </h3>
             <div :class="field.classes" :style="field.styles">
                 <label v-for="option in field.options" :class="field.labelClasses" :style="field.labelStyles">
                     <span class="block flex gap-1.5">
                         <span class="block">
                             <input
                                 :id="option.value === value ? field.attribute : null"
+                                :key="option.value"
                                 :value="option.value"
-                                :name="`${formUniqueId}_${field.attribute}`"
+                                :name="formUniqueId + '_' + field.attribute"
                                 type="radio"
                                 v-model="selectedOption"
                                 class="checkbox rounded-full"
