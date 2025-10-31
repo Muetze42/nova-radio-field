@@ -12,8 +12,8 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "laravel/nova": "^4.0",
+        "php": "^8.2",
+        "laravel/nova": "^5.0",
         "norman-huth/nova-basic-package": "^1.2.0"
     },
     "autoload": {

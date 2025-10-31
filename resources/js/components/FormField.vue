@@ -41,7 +41,6 @@
 
 <script>
 import {DependentFormField, HandlesValidationErrors} from 'laravel-nova'
-import find from "lodash/find";
 
 export default {
     mixins: [HandlesValidationErrors, DependentFormField],

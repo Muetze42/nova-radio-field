@@ -1,6 +1,6 @@
 # Laravel Nova Radio Buttons Field
 
-A Radio Buttons field for [Laravel Nova](https://nova.laravel.com/).
+A Radio Buttons field for [Laravel Nova 5](https://nova.laravel.com/).
 
 [![Documentation](https://raw.githubusercontent.com/Muetze42/Muetze42/main/files/btn-documentation.jpg)](#install)
 [![Live Preview](https://raw.githubusercontent.com/Muetze42/Muetze42/main/files/btn-live-preview.jpg)](https://nova-demo.huth.it/resources/nova-radio-field-radios/1/edit)

@@ -1,6 +1,6 @@
-import FormField from './components/FormField'
-import IndexField from './components/IndexField'
-import DetailField from './components/DetailField'
+import FormField from './components/FormField.vue'
+import IndexField from './components/IndexField.vue'
+import DetailField from './components/DetailField.vue'
 
 Nova.booting((app, store) => {
   app.component('form-nova-radio-field', FormField)
